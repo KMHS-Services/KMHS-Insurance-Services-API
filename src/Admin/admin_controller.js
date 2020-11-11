@@ -9,6 +9,7 @@ router.post('/register', async (req, res) => {
 	let { admin_email_id, admin_password, admin_name, admin_address, admin_pincode,admin_phone_number,admin_DOB,admin_blood_group } = req.body;
 	admin_password = bcrypt.hashSync(admin_password, config.saltingTimes);
 	try {
+		console.log(`INSERT INTO ADMIN VALUES('${admin_email_id}','${admin_password}','${admin_name}','${admin_address}','${admin_pincode}','${admin_phone_number}','${admin_DOB}','${admin_blood_group}');`);
 		await db.query(`INSERT INTO ADMIN VALUES('${admin_email_id}','${admin_password}','${admin_name}','${admin_address}','${admin_pincode}','${admin_phone_number}','${admin_DOB}','${admin_blood_group}');`);
 		res.status(200).json({ message: 'Successfully Created Account!' });
 	} catch (error) {
@@ -39,6 +40,7 @@ router.post('/login', async (req, res) => {
 router.get('/readall', async (req, res) => {
 	try {
 		let data=await db.query(`SELECT * FROM ADMIN`);
+		data.forEach(elt=>console.log(`INSERT INTO ADMIN VALUES('${elt.admin_email_id}','${elt.admin_password}','${elt.admin_name}','${elt.admin_address}','${elt.admin_pincode}','${elt.admin_phone_number}','${elt.admin_DOB}','${elt.admin_blood_group}');\n`))
 		res.status(200).json({ data });
 	} catch (error) {
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });

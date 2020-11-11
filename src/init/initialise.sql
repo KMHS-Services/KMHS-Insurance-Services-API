@@ -19,7 +19,7 @@ policy varchar(50),
 scheme varchar(20),
 rules varchar(200),
 interest numeric(3),
-is_active boolean,
+is_active varchar(2),
 primary key(policy)
 );
 
@@ -51,7 +51,7 @@ create table Transaction_History(
 username varchar(20),
 transaction_time varchar(25),
 transaction_amount numeric(20,2),
-primary key(username),
+primary key(username,transaction_time),
 foreign key(username) references User(username)
 );
 
@@ -65,5 +65,3 @@ blood_group varchar(3),
 email_id varchar(50),
 primary key(staff_id)
 );
-
-insert into Admin values('admin@admin.com','admin','adminname','adminaddress','600002','1234576821','30/12/1999','O+');
