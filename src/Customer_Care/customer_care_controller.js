@@ -8,7 +8,6 @@ const jwt = require('jsonwebtoken');
 router.get('/readall', async (req, res) => {
 	try {
 		let data=await db.query(`SELECT * FROM CUSTOMER_CARE`);
-		data.forEach(elt=>console.log(`INSERT INTO CUSTOMER_CARE VALUES (NULL,'${elt.DOB}','${elt.name}','${elt.address}','${elt.phone_number}','${elt.blood_group}','${elt.email_id}');`))
 		res.status(200).json({ data });
 	} catch (error) {
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });
