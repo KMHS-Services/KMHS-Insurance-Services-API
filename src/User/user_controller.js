@@ -68,4 +68,16 @@ router.post('/delete', async (req, res) => {
 	}
 });
 
+
+
+router.get('/mypolicy', async (req, res) => {
+	try {
+		let data=await db.query(`SELECT * FROM POLICY_TAKEN WHERE USERNAME LIKE ${req.body.username}`);
+		res.status(200).json({ data });
+	} catch (error) {
+		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });
+	}
+});
+
+
 module.exports = router;
