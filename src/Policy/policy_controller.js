@@ -42,4 +42,22 @@ router.post('/delete', async (req, res) => {
 	}
 });
 
+router.get('/pickpolicy',async (req,res)=> {
+	try {
+		let data=await db.query(`SELECT * FROM POLICY WHERE IS_ACTIVE=1;SELECT * FROM ADMIN;SELECT * FROM USER`);
+		let policies=[]
+		let admins=[]
+		let users=[]
+		for(let policy of data[0])
+			policies.push(policy.policy)
+		for(let admin of data[1])
+			admins.push(admin.admin_email_id)
+		for(let user of data[2])
+			users.push(user.username)
+		res.status(200).json({ policies,admins,users });
+	} catch (error) {
+		res.status(error.status ? error.status : 500).json({ message: `error: ${error.message}` });
+	}
+})
+
 module.exports = router;

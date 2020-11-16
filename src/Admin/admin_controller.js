@@ -13,6 +13,9 @@ router.post('/register', async (req, res) => {
 		await db.query(`INSERT INTO ADMIN VALUES('${admin_email_id}','${admin_password}','${admin_name}','${admin_address}','${admin_pincode}','${admin_phone_number}','${admin_DOB}','${admin_blood_group}');`);
 		res.status(200).json({ message: 'Successfully Created Account!' });
 	} catch (error) {
+
+		if (error.code === 'ER_DUP_ENTRY')
+			return res.status(400).json({ message: 'admin_email_id already taken' });
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });
 	}
 });

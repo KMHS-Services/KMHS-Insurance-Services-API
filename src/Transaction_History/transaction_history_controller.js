@@ -43,4 +43,19 @@ router.post('/delete', async (req, res) => {
 	}
 });
 
+router.get('/usernames', async (req, res) => {
+	try {
+		let users=await db.query(`SELECT * FROM USER`);
+		let data={}
+		for (const user of users) {
+			data[user.username]=user.username
+		}
+		res.status(200).json({ data });
+	} catch (error) {
+		res.status(error.status ? error.status : 500).json({ message: `error: ${error.message}` });
+	}
+});
+
+
+
 module.exports = router;
