@@ -19,6 +19,9 @@ router.post('/create',async (req, res) => {
 		await db.query(`INSERT INTO POLICY VALUES ('${policy}','${scheme}','${rules}','${interest}','${is_active}')`);
 		res.status(200).json({ message: 'Successfully Created Policy!' });
 	} catch (error) {
+
+		if (error.code === 'ER_DUP_ENTRY')
+			return res.status(400).json({ message: 'policy already created' });
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });
 	}
 });

@@ -20,6 +20,8 @@ router.post('/create',async (req, res) => {
 		await db.query(`INSERT INTO CUSTOMER_CARE VALUES (NULL,'${DOB}','${name}','${address}','${phone_number}','${blood_group}','${email_id}')`);
 		res.status(200).json({ message: 'Successfully Created Staff!' });
 	} catch (error) {
+		if (error.code === 'ER_DUP_ENTRY')
+			return res.status(400).json({ message: 'already taken' });
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });
 	}
 });

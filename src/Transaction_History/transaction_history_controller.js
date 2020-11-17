@@ -20,6 +20,9 @@ router.post('/create',async (req, res) => {
 		await db.query(`INSERT INTO TRANSACTION_HISTORY VALUES ('${username}','${transaction_time}','${transaction_amount}')`);
 		res.status(200).json({ message: 'Transaction Successful!' });
 	} catch (error) {
+
+		if (error.code === 'ER_DUP_ENTRY')
+			return res.status(400).json({ message: 'transaction already done' });
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });
 	}
 });

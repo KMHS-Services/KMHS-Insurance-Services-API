@@ -20,7 +20,6 @@ router.post('/create',async (req, res) => {
 		await db.query(`INSERT INTO POLICY_TAKEN VALUES ('${username}','${policy}','${admin_email_id}');INSERT INTO TRANSACTION_HISTORY VALUES('${username}','${new Date().toISOString()}','-1')`);
 		res.status(200).json({ message: 'Successfully applied Policy!' });
 	} catch (error) {
-
 		if (error.code === 'ER_DUP_ENTRY')
 			return res.status(400).json({ message: 'already taken' });
 			console.log(error);

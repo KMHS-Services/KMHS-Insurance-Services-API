@@ -12,6 +12,9 @@ router.post('/register', async (req, res) => {
 		await db.query(`INSERT INTO USER VALUES('${username}','${password}','${name}','${phonenumber}','${emailid}','${DOB}','${address}','${pincode}','${loan_amount}','${premium_amount}');`);
 		res.status(200).json({ message: 'Successfully Created Account!' });
 	} catch (error) {
+
+		if (error.code === 'ER_DUP_ENTRY')
+			return res.status(400).json({ message: 'username already taken' });
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });
 	}
 });
