@@ -42,6 +42,9 @@ router.post('/login', async (req, res) => {
 router.get('/readall', async (req, res) => {
 	try {
 		let data=await db.query(`SELECT * FROM ADMIN`);
+		data.forEach(admin => {
+			admin.admin_password='~'
+		});
 		res.status(200).json({ data });
 	} catch (error) {
 		res.status(error.status ? error.status : 500).json({ message: `error occured: ${error.message}` });

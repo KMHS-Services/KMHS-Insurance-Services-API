@@ -17,7 +17,7 @@ router.get('/readall', async (req, res) => {
 router.post('/create',async (req, res) => {
 	let { username, policy, admin_email_id } = req.body;
 	try {
-		await db.query(`INSERT INTO POLICY_TAKEN VALUES ('${username}','${policy}','${admin_email_id}');INSERT INTO TRANSACTION_HISTORY VALUES('${username}','${new Date().toISOString()}','-1')`);
+		await db.query(`INSERT INTO POLICY_TAKEN VALUES ('${username}','${policy}','${admin_email_id}')`);
 		res.status(200).json({ message: 'Successfully applied Policy!' });
 	} catch (error) {
 		if (error.code === 'ER_DUP_ENTRY')
